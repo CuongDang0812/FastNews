@@ -31,6 +31,11 @@ namespace Models.DAO
             return db.Categories.Where(x => x.Status == true).ToList();
         }
 
+        public List<Category> ShowMenuCategory()
+        {
+            return this.db.Categories.Where(x => x.Status == true).OrderBy(x => x.DisplayOrder).ToList();
+        }
+
         public IEnumerable<Category> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<Category> model = db.Categories;
