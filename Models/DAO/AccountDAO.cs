@@ -23,7 +23,7 @@ namespace Models.DAO
                 return 0;
             }
             else
-            if (result.IsLock == false)
+            if (result.IsLock)
             {
                 return -1;
             }
