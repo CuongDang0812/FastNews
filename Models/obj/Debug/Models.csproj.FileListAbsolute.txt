@@ -1,0 +1,13 @@
+E:\FastNews\Models\bin\Debug\Models.dll.config
+E:\FastNews\Models\bin\Debug\Models.dll
+E:\FastNews\Models\bin\Debug\Models.pdb
+E:\FastNews\Models\bin\Debug\EntityFramework.dll
+E:\FastNews\Models\bin\Debug\EntityFramework.SqlServer.dll
+E:\FastNews\Models\bin\Debug\PagedList.dll
+E:\FastNews\Models\bin\Debug\PagedList.Mvc.dll
+E:\FastNews\Models\bin\Debug\EntityFramework.xml
+E:\FastNews\Models\bin\Debug\EntityFramework.SqlServer.xml
+E:\FastNews\Models\bin\Debug\PagedList.xml
+E:\FastNews\Models\bin\Debug\PagedList.Mvc.xml
+E:\FastNews\Models\obj\Debug\Models.dll
+E:\FastNews\Models\obj\Debug\Models.pdb

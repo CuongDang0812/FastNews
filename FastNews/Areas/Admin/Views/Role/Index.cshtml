@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<Models.EF.Role>
+
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+
+@section header {
+    Danh sách quyền.
+}
+
+<div class="panel-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Danh sách quyền.</h6>
+                </div>
+                <div class="card-body">
+
+                    @using (Html.BeginForm("Index", "Role", FormMethod.Get))
+                    {
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <input type="text" value="@ViewBag.SearchString" name="searchString" />
+                                <button type="submit">Tìm Kiếm</button>
+
+                            </div>
+                        </div>
+                    }
+
+                    <br />
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>RoleID</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr id="row_@item.RoleID">
+                                        <td>
+                                            <a href="/Admin/Role/Edit/@item.RoleID">Sửa</a>
+                                            |
+                                            @Ajax.ActionLink("Xóa", "Delete", new { @id = item.RoleID }, new AjaxOptions
+                                       {
+                                           Confirm = "Bạn có muốn xóa bản ghi này?",
+                                           OnComplete = "$('#row_" + @item.RoleID + "').remove()",
+                                           HttpMethod = "Delete"
+                                       })
+                                        </td>
+
+                                        <td>@item.RoleID</td>
+                                        <td>@item.RoleName</td>
+                                        
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6">
+                                        <a href="/Admin/Role/Create">Thêm Mới</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, @searchString = @ViewBag.SearchString }))
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
