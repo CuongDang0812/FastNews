@@ -12,13 +12,6 @@ CKEDITOR.editorConfig = function( config ) {
     config.syntaxhighlight_lang = 'csharp';
     config.syntaxhighlight_hideControls = true;
     config.language = 'vi';
-    config.filebrowserBrowseUrl = '/assets/admin/js/plugins/ckfinder/ckfinder.html';
-    config.filebrowserImageBrowseUrl = '/assets/admin/js/plugins/ckfinder/ckfinder.html?type=Images';
-    config.filebrowserFlashBrowseUrl = '/assets/admin/js/plugins/ckfinder/ckfinder.html?type=Flash';
-    config.filebrowserUploadUrl = '/assets/admin/js/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files';
-    config.filebrowserImageUploadUrl = '/DataImages/';
-    config.filebrowserFlashUploadUrl = '/assets/admin/js/plugins/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
-
     CKFinder.SetupCKEditor(null, '/assets/admin/js/plugins/ckfinder/');
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.

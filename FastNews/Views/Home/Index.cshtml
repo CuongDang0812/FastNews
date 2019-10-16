@@ -1,167 +1,40 @@
-﻿
+﻿@*@model Models.EF.Post*@
 @{
+    /**/
+
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var test = (List<Models.ViewModel.PostViewModel>)ViewBag.PostTest;
 }
 
-<div class="single_category wow fadeInDown">
-    <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Business</a> </h2>
-    <div class="business_category_left wow fadeInDown">
-        <ul class="fashion_catgnav">
-            <li>
-                <div class="catgimg2_container"> <a href="pages/single.html"><img alt="" src="/assets/client/images/390x240x1.jpg"></a> </div>
-                <h2 class="catg_titile"><a href="pages/single.html">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> <span class="meta_more"><a href="#">Read More...</a></span> </div>
-                <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
-            </li>
-        </ul>
-    </div>
-    <div class="business_category_right wow fadeInDown">
-        <ul class="small_catg">
-            <li>
-                <div class="media wow fadeInDown">
-                    <a class="media-left" href="pages/single.html"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="pages/single.html">Duis condimentum nunc pretium lobortis </a></h4>
-                        <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="media wow fadeInDown">
-                    <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                        <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="media wow fadeInDown">
-                    <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                        <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="games_fashion_area">
-    <div class="games_category">
-        <div class="single_category">
-            <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Games</a> </h2>
-            <ul class="fashion_catgnav wow fadeInDown">
-                <li>
-                    <div class="catgimg2_container"> <a href="pages/single.html"><img alt="" src="/assets/client/images/390x240x1.jpg"></a> </div>
-                    <h2 class="catg_titile"><a href="#">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> <span class="meta_more"><a href="#">Read More...</a></span> </div>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
-                </li>
-            </ul>
-            <ul class="small_catg wow fadeInDown">
-                <li>
-                    <div class="media">
-                        <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                            <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="media wow fadeInDown">
-                        <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                            <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="fashion_category">
-        <div class="single_category">
-            <div class="single_category wow fadeInDown">
-                <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Fashion</a> </h2>
-                <ul class="fashion_catgnav wow fadeInDown">
-                    <li>
-                        <div class="catgimg2_container"> <a href="#"><img alt="" src="/assets/client/images/390x240x1.jpg"></a> </div>
-                        <h2 class="catg_titile"><a href="#">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                        <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> <span class="meta_more"><a href="#">Read More...</a></span> </div>
-                        <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
-                    </li>
-                </ul>
-                <ul class="small_catg wow fadeInDown">
-                    <li>
-                        <div class="media wow fadeInDown">
-                            <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                                <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="media wow fadeInDown">
-                            <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                                <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+@foreach (var category in test)
+{
+    <div class="single_category wow fadeInDown">
+        <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">@category.CategoryName</a> </h2>
+        @if (@category.ListPosts.Count == 0)
+        {
+            <div class="media-body">
+                <blockquote>Hiện tại chưa có bài viết nào cho mục này...</blockquote>
             </div>
-        </div>
-    </div>
-</div>
-<div class="technology_catrarea">
-    <div class="single_category">
-        <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Technology</a> </h2>
-        <div class="business_category_left">
-            <ul class="fashion_catgnav wow fadeInDown">
-                <li>
-                    <div class="catgimg2_container"> <a href="#"><img alt="" src="/assets/client/images/390x240x1.jpg"></a> </div>
-                    <h2 class="catg_titile"><a href="#">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> <span class="meta_more"><a href="#">Read More...</a></span> </div>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
-                </li>
+        }
+        else
+        {
+            <ul class="small_catg popular_catg wow fadeInDown" style="padding-top: 20px;">
+                @foreach (var post in category.ListPosts)
+                {
+                    <li>
+                        <div class="media wow fadeInDown">
+                            <a href="@category.CategoryMetaTitle/@post.MetaTitle-@post.PostID" class="media-left"><img alt="@post.MetaTitle" src="@post.Image"> </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="@category.CategoryMetaTitle/@post.MetaTitle-@post.PostID">@post.Title</a></h4>
+                                <div class="comments_box"> <span class="meta_date">@post.DatetimeCreate</span> <span class="meta_comment"><a href="@category.CategoryMetaTitle/@post.MetaTitle-@post.PostID">No Comments</a></span> <span class="meta_more"><a href="#">Read More...</a></span> </div>
+                                <p>@post.Decription</p>
+                            </div>
+                        </div>
+                    </li>
+                }
             </ul>
-        </div>
-        <div class="business_category_right">
-            <ul class="small_catg wow fadeInDown">
-                <li>
-                    <div class="media wow fadeInDown">
-                        <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                            <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="media wow fadeInDown">
-                        <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                            <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="media wow fadeInDown">
-                        <a class="media-left" href="#"><img src="/assets/client/images/112x112.jpg" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                            <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span> </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        }
     </div>
-</div>
-
+}

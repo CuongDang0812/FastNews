@@ -1,3 +1,5 @@
+﻿using System.ComponentModel;
+
 namespace Models.EF
 {
     using System;
@@ -11,17 +13,26 @@ namespace Models.EF
     {
         public int CategoryID { get; set; }
 
+        [Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [StringLength(50)]
+        [DisplayName("Tên thể loại")]
         public string CategoryName { get; set; }
 
         [StringLength(50)]
-        public string MataTitle { get; set; }
+        public string MetaTitle { get; set; }
 
-        public int? DisplayOrder { get; set; }
+        [Required(ErrorMessage = "Dữ liệu bắt buộc")]
+        [DisplayName("Thứ tự hiển thị")]
+        public int DisplayOrder { get; set; }
 
         [StringLength(10)]
+        [DisplayName("Cách điều hướng")]
         public string Target { get; set; }
 
-        public bool Status { get; set; }
+        [DisplayName("Hiển thị trên trang chủ")]
+        public bool ShowOnHome { get; set; }
+
+        [DisplayName("Hiển thị trên menu")]
+        public bool ShowOnMenu { get; set; }
     }
 }

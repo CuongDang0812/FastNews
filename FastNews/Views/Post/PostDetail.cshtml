@@ -1,0 +1,47 @@
+﻿@model Models.EF.Post
+@{
+    ViewBag.Title = "Bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var similarPost = (List<Models.EF.Post>)ViewBag.SimilarPost;
+    var prevPost = (Models.EF.Post)ViewBag.PreviousPost;
+    var nextPost = (Models.EF.Post)ViewBag.NextPost;
+}
+@section OptionPostDetail
+{
+    <div class="post_pagination">
+        @if (prevPost != null)
+        {
+            <div class="prev">
+                <a class="angle_left" href="/@prevPost.ContentDetail/@prevPost.MetaTitle-@prevPost.PostID/"><i class="fa fa-angle-double-left"></i></a>
+                <div class="pagincontent"> <span>Bài viết trước</span> <a href="/@prevPost.ContentDetail/@prevPost.MetaTitle-@prevPost.PostID/">@prevPost.Title</a> </div>
+            </div>
+        }
+        @if (nextPost != null)
+        {
+            <div class="next">
+                <div class="pagincontent"> <span>Bài viết sau</span> <a href="/@nextPost.ContentDetail/@nextPost.MetaTitle-@nextPost.PostID/">@nextPost.Title</a> </div>
+                <a class="angle_right" href="/@nextPost.ContentDetail/@nextPost.MetaTitle-@nextPost.PostID/"><i class="fa fa-angle-double-right"></i></a>
+            </div>
+        }
+    </div>
+    <div class="similar_post">
+        <h2>Bài viết cùng thể loại <i class="fa fa-thumbs-o-up"></i></h2>
+        <ul class="small_catg similar_nav wow fadeInDown animated">
+
+            @foreach (var post in similarPost)
+            {
+                <li>
+                    <div class="media wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;">
+                        <a class="media-left related-img" href="/@post.ContentDetail/@post.MetaTitle-@post.PostID/"><img src="@post.Image" alt="@post.MetaTitle"></a>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="/@post.ContentDetail/@post.MetaTitle-@post.PostID/">@post.Title </a></h4>
+                            <p>@post.Decription</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+

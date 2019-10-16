@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PagedList;
 
 namespace Models.DAO
@@ -18,15 +16,16 @@ namespace Models.DAO
 
         public List<Role> ListAll()
         {
-            return db.Roles.Where(x => x.Status == true).ToList();
+            return db.Roles.Where(x => x.IsDisable == false).OrderByDescending(x=>x.RoleID).ToList();
         }
 
-        public Role GetById(string roleName)
-        {
-            return db.Roles.SingleOrDefault(x => x.RoleName == roleName);
-        }
+        // no use
+        //public Role GetById(string roleName)
+        //{
+        //    return db.Roles.SingleOrDefault(x => x.RoleName == roleName);
+        //}
 
-        public Role viewDetail(int id)
+        public Role ViewDetail(int id)
         {
             return db.Roles.Find(id);
         }
@@ -43,8 +42,17 @@ namespace Models.DAO
 
         public long Insert(Role entity)
         {
+            // kiem tra trung ten
+            var roleName = this.db.Roles.Where(x => x.RoleName == entity.RoleName).Count();
+            if (roleName != 0)
+            {
+                return -1;
+            }
+            entity.IsDisable = false;
+
             db.Roles.Add(entity);
             db.SaveChanges();
+
             return entity.RoleID;
         }
 
@@ -63,20 +71,27 @@ namespace Models.DAO
             }
         }
 
-        public bool Updete(Role entity)
+        public int Update(Role entity)
         {
             try
             {
+                // kiem tra xem tên quyen duoc cap nhat da co tren he thong chua
+                // neu co thi tra ve -1
+                var roleName = this.db.Roles.Where(x => x.RoleName == entity.RoleName && x.RoleID != entity.RoleID).Count();
+                if (roleName != 0)
+                {
+                    return -1;
+                }
                 var role = db.Roles.Find(entity.RoleID);
                 role.RoleName = entity.RoleName;
-                role.Status = entity.Status;
+                role.IsDisable = entity.IsDisable;
                 db.SaveChanges();
-                return true;
+                return 1;
             }
             catch (Exception)
             {
                 //logging
-                return false;
+                return 0;
             }
         }
 

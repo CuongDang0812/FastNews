@@ -6,12 +6,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using FastNews.Common;
+
 namespace FastNews.Areas.Admin.Controllers
 {
     public class CategoryController : BaseController
     {
         // GET: Admin/Category
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CategoryDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -31,6 +33,7 @@ namespace FastNews.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new CategoryDAO();
+                cate.MetaTitle = ConvertToUnSign.utf8Convert(cate.CategoryName);
                 long id = dao.Insert(cate);
                 if (id > 0)
                 {
@@ -42,7 +45,7 @@ namespace FastNews.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Thêm không thành công");
                 }
             }
-            return View("Index");
+            return View(cate);
         }
 
 
@@ -55,7 +58,7 @@ namespace FastNews.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var cate = new CategoryDAO().viewDetail(id);
+            var cate = new CategoryDAO().ViewDetail(id);
             return View(cate);
         }
 
@@ -65,7 +68,12 @@ namespace FastNews.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new CategoryDAO();
-                var result = dao.Updete(cate);
+
+                // chuyen thanh chuoi khong dau 
+                // gan cho field Metatile 
+                cate.MetaTitle = ConvertToUnSign.utf8Convert(cate.CategoryName);
+
+                var result = dao.Update(cate);
                 if (result)
                 {
                     return RedirectToAction("Index", "Category");
@@ -76,7 +84,8 @@ namespace FastNews.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Cập nhật không thành công");
                 }
             }
-            return View("Index");
+            return View(cate);
+
         }
     }
 }

@@ -1,17 +1,13 @@
 ﻿using Models.DAO;
 using Models.EF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FastNews.Areas.Admin.Controllers
 {
-    public class RoleController : BaseController
+    public class RoleController : Controller
     {
         // GET: Admin/Role
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
         {
             var dao = new RoleDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -28,22 +24,27 @@ namespace FastNews.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(Role role)
         {
-            if (ModelState.IsValid)
-            {
-                var dao = new RoleDAO();
-                long id = dao.Insert(role);
-                if (id > 0)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index", "Role");
+                    var dao = new RoleDAO();
+                    long id = dao.Insert(role);
+                    if (id > 0)
+                    {
+                        return RedirectToAction("Index", "Role");
 
+                    }
+                    else if (id == -1)
+                    {
+                        ModelState.AddModelError("", "Tên quyền đã tồn tại");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Thêm không thành công");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Thêm không thành công");
-                }
-            }
-            return View("Index");
+            return View(role);
         }
+
 
         [HttpDelete]
         public ActionResult Delete(int id)
@@ -54,7 +55,7 @@ namespace FastNews.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var role = new RoleDAO().viewDetail(id);
+            var role = new RoleDAO().ViewDetail(id);
             return View(role);
         }
 
@@ -64,19 +65,22 @@ namespace FastNews.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new RoleDAO();
-                var result = dao.Updete(role);
-                if (result)
+                var result = dao.Update(role);
+                if (result == 1)
                 {
                     return RedirectToAction("Index", "Role");
 
+                }
+                else if (result == -1)
+                {
+                    ModelState.AddModelError("", "Tên quyền này đã có trên hệ thống, vui lòng nhập tên khác!");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Cập nhật không thành công");
                 }
             }
-            return View("Index");
+            return View(role);
         }
-
     }
 }

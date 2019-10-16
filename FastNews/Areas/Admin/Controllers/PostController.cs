@@ -1,17 +1,16 @@
 ﻿using Models.DAO;
 using Models.EF;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+
+using FastNews.Common;
 
 namespace FastNews.Areas.Admin.Controllers
 {
     public class PostController : BaseController
     {
         // GET: Admin/Post
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new PostDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -19,7 +18,7 @@ namespace FastNews.Areas.Admin.Controllers
             return View(model);
         }
 
-        public void SetviewBag(long? selectedId = null)
+        public void SetViewBag(long? selectedId = null)
         {
             var dao = new CategoryDAO();
             ViewBag.CategoryID = new SelectList(dao.ListAll(), "CategoryID", "CategoryName", selectedId);
@@ -28,16 +27,20 @@ namespace FastNews.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            SetviewBag();
+            SetViewBag();
             return View();
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(Post post)
         {
             if (ModelState.IsValid)
             {
                 var dao = new PostDAO();
+                post.MetaTitle = ConvertToUnSign.utf8Convert(post.Title);
+                post.DatetimeCreate = DateTime.Now;
+
                 long id = dao.Insert(post);
                 if (id > 0)
                 {
@@ -49,8 +52,8 @@ namespace FastNews.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Thêm không thành công");
                 }
             }
-            SetviewBag();
-            return View("Index");
+            SetViewBag();
+            return View(post);
         }
 
         [HttpDelete]
@@ -62,18 +65,24 @@ namespace FastNews.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var post = new PostDAO().viewDetail(id);
-            SetviewBag(post.CategoryID);
+            var post = new PostDAO().ViewDetail(id);
+            SetViewBag(post.CategoryID);
             return View(post);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(Post post)
         {
             if (ModelState.IsValid)
             {
                 var dao = new PostDAO();
-                var result = dao.Updete(post);
+
+                // chuyen sang chuoi khong dau
+                // gan vao cho metatitle
+                post.MetaTitle = ConvertToUnSign.utf8Convert(post.Title);
+
+                var result = dao.Update(post);
                 if (result)
                 {
                     return RedirectToAction("Index", "Post");
@@ -84,9 +93,8 @@ namespace FastNews.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Cập nhật không thành công");
                 }
             }
-            SetviewBag(post.CategoryID);
-            return View("Index");
+            SetViewBag(post.CategoryID);
+            return View(post);
         }
-
     }
 }

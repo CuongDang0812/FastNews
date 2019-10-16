@@ -42,6 +42,10 @@ namespace FastNews.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Mật khẩu không đúng.");
                 }
+                else if (result == -3)
+                {
+                    ModelState.AddModelError("", "Tài khoản không phải là tài khoản Admin");
+                }
                 else
                 {
                     ModelState.AddModelError("", "Đăng nhập không đúng.");

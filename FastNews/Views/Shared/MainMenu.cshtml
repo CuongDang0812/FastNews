@@ -1,0 +1,16 @@
+﻿
+@model List<Models.EF.Category>
+
+<ul class="nav navbar-nav custom_nav">
+    @foreach (var item in Model)
+    {
+        if (@item.MetaTitle != string.Empty)
+        {
+            <li><a href="/@item.MetaTitle/@item.CategoryID" target="@item.Target">@item.CategoryName</a></li>
+        }
+        else
+        {
+        <li><a href="/" target="@item.Target">@item.CategoryName</a></li>
+        }
+    }
+</ul>

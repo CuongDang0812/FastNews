@@ -16,24 +16,20 @@ namespace Models.DAO
             db = new FastNewsDbContext();
         }
 
-        public Category GetById(string categoryName)
-        {
-            return db.Categories.SingleOrDefault(x => x.CategoryName == categoryName);
-        }
+        // no use
+        //public Category GetById(string categoryName)
+        //{
+        //    return db.Categories.SingleOrDefault(x => x.CategoryName == categoryName);
+        //}
 
-        public Category viewDetail(int id)
+        public Category ViewDetail(int id)
         {
             return db.Categories.Find(id);
         }
 
         public List<Category> ListAll()
         {
-            return db.Categories.Where(x => x.Status == true).ToList();
-        }
-
-        public List<Category> ShowMenuCategory()
-        {
-            return this.db.Categories.Where(x => x.Status == true).OrderBy(x => x.DisplayOrder).ToList();
+            return db.Categories.Where(x => x.ShowOnMenu == true).ToList();
         }
 
         public IEnumerable<Category> ListAllPaging(string searchString, int page, int pageSize)
@@ -68,14 +64,16 @@ namespace Models.DAO
             }
         }
 
-        public bool Updete(Category entity)
+        public bool Update(Category entity)
         {
             try
             {
                 var cate = db.Categories.Find(entity.CategoryID);
                 cate.CategoryName = entity.CategoryName;
+                cate.MetaTitle = entity.MetaTitle;
                 cate.DisplayOrder = entity.DisplayOrder;
-                cate.Status = entity.Status;
+                cate.ShowOnMenu = entity.ShowOnMenu;
+                cate.ShowOnHome = entity.ShowOnHome;
                 cate.Target = entity.Target;
                 db.SaveChanges();
                 return true;
@@ -87,5 +85,10 @@ namespace Models.DAO
             }
         }
 
+        //Add function in Client web
+        public List<Category> ShowMenuCategory()
+        {
+            return this.db.Categories.Where(x => x.ShowOnMenu == true).OrderBy(x => x.DisplayOrder).ToList();
+        }
     }
 }

@@ -1,3 +1,5 @@
+﻿using System.ComponentModel;
+
 namespace Models.EF
 {
     using System;
@@ -11,8 +13,12 @@ namespace Models.EF
     {
         public int RoleID { get; set; }
 
+        [Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [StringLength(50)]
+        [DisplayName("Tên quyền")]
         public string RoleName { get; set; }
-        public bool Status { get; set; }
+
+        [DisplayName("Trạng thái")]
+        public bool IsDisable { get; set; }
     }
 }

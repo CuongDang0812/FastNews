@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using Models.DAO;
 
@@ -12,14 +8,24 @@ namespace FastNews.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.PostTest = new PostDAO().GetTop3Post();
+
             return View();
         }
 
         [ChildActionOnly]
         public ActionResult MainMenu()
         {
-            var model = new CategoryDAO().ShowMenuCategory();
-            return PartialView(model);
+            var menu = new CategoryDAO().ShowMenuCategory();
+            return PartialView(menu);
+        }
+
+
+        [ChildActionOnly]
+        public ActionResult RecentPost()
+        {
+            var recent = new PostDAO().GetRecentPost();
+            return PartialView(recent);
         }
     }
 }

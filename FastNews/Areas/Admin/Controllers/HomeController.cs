@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using FastNews.Common;
+
 namespace FastNews.Areas.Admin.Controllers
 {
     public class HomeController : BaseController
@@ -12,6 +14,12 @@ namespace FastNews.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session[Commonstants.USER_SESSION] = null;
+            return Redirect("/Admin/Login/Index");
         }
     }
 }

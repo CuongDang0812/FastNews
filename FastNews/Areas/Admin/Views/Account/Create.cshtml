@@ -6,7 +6,7 @@
 }
 
 @section header {
-    Thêm người dùng.
+    Thêm mới tài khoản
 }
 
 <div class="panel-body">
@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Nhập thông tin người dùng</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Thông tin tạo mới tài khoản</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -32,18 +32,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -54,18 +54,12 @@
                                         @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.IsLock, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.CheckBoxFor(model => model.IsLock, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.IsLock, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Create" class="btn btn-default" />
+                                        <input type="submit" value="Thêm mới" class="btn btn-primary" />
+                                        <a href="/Admin/Account/Index" class="btn btn-secondary btn-icon-split" style="margin: auto 1rem">
+                                            <span class="text">Thoát</span>
+                                        </a>
                                     </div>
                                 </div>
                             }

@@ -1,0 +1,36 @@
+﻿@model Models.ViewModel.PostViewModel
+@{
+    ViewBag.Title = "Danh mục";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //var Model = (Models.ViewModel.PostViewModel)ViewBag.CategoryDetail;
+}
+
+<div class="single_category wow fadeInDown">
+    <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">@Model.CategoryName</a> </h2>
+    @if (@Model.ListPosts.Count == 0)
+    {
+        <div class="media-body">
+            <blockquote>Hiện tại chưa có bài viết nào cho mục này...</blockquote>
+        </div>
+    }
+    else
+    {
+        <ul class="small_catg popular_catg wow fadeInDown" style="padding-top: 20px;">
+            @foreach (var post in Model.ListPosts)
+            {
+                <li>
+                    <div class="media wow fadeInDown">
+                        <a href="/@Model.CategoryMetaTitle/@post.MetaTitle-@post.PostID" class="media-left"><img alt="@post.MetaTitle" src="@post.Image"> </a>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="/@Model.CategoryMetaTitle/@post.MetaTitle-@post.PostID">@post.Title</a></h4>
+                            <div class="comments_box"> <span class="meta_date">@post.DatetimeCreate</span> <span class="meta_comment"><a href="#">No Comments</a></span> <span class="meta_more"><a href="/@Model.CategoryMetaTitle/@post.MetaTitle-@post.PostID">Read More...</a></span> </div>
+                            <p>@post.Decription</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+      }
+</div>
+

@@ -12,7 +12,7 @@ namespace FastNews.Areas.Admin.Controllers
     public class AccountController : BaseController
     {
         // GET: Admin/Account
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new AccountDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -20,7 +20,7 @@ namespace FastNews.Areas.Admin.Controllers
             return View(model);
         }
 
-        public void SetviewBag(long? selectedId = null)
+        public void SetViewBag(long? selectedId = null)
         {
             var dao = new RoleDAO();
             ViewBag.RoleID = new SelectList(dao.ListAll(), "RoleID", "RoleName", selectedId);
@@ -29,7 +29,7 @@ namespace FastNews.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            SetviewBag();
+            SetViewBag();
             return View();
         }
 
@@ -47,13 +47,17 @@ namespace FastNews.Areas.Admin.Controllers
                     return RedirectToAction("Index", "Account");
 
                 }
+                else if (id == -1)
+                {
+                    ModelState.AddModelError("", "Tên tài khoản đã tồn tại");
+                }
                 else
                 {
                     ModelState.AddModelError("", "Thêm không thành công");
                 }
             }
-            SetviewBag();
-            return View("Index");
+            SetViewBag();
+            return View(user);
         }
 
         [HttpDelete]
@@ -65,8 +69,8 @@ namespace FastNews.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            var user = new AccountDAO().viewDetail(id);
-            SetviewBag(user.RoleID);
+            var user = new AccountDAO().ViewDetail(id);
+            SetViewBag(user.RoleID);
             return View(user);
         }
 
@@ -76,25 +80,30 @@ namespace FastNews.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new AccountDAO();
+                var checkPass = user.Password;
                 if (!string.IsNullOrEmpty(user.Password))
                 {
                     var encrytedMd5Pas = Encryptor.MD5Hash(user.Password);
                     user.Password = encrytedMd5Pas;
                 }
 
-                var result = dao.Updete(user);
-                if (result)
+                var result = dao.Update(user, checkPass);
+                if (result == 1)
                 {
                     return RedirectToAction("Index", "Account");
 
+                }
+                else if (result == -1)
+                {
+                    ModelState.AddModelError("", "Tên quyền này đã có trên hệ thống, vui lòng nhập tên khác!");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Cập nhật không thành công");
                 }
             }
-            SetviewBag(user.RoleID);
-            return View("Index");
+            SetViewBag(user.RoleID);
+            return View(user);
         }
 
     }

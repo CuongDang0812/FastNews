@@ -207,9 +207,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
@@ -220,17 +218,16 @@
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Common\Commonstants.cs" />
+    <Compile Include="Common\ConvertToUnSign.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\admin\js\plugins\ckeditor\adapters\jquery.js" />
@@ -968,11 +965,51 @@
     <Content Include="assets\admin\js\plugins\ckfinder\skins\v1\richcombo.css" />
     <Content Include="assets\admin\js\plugins\ckfinder\skins\v1\skin.js" />
     <Content Include="assets\admin\js\plugins\ckfinder\skins\v1\uipanel.css" />
+    <Content Include="assets\client\css\animate.css" />
+    <Content Include="assets\client\css\bootstrap.min.css" />
+    <Content Include="assets\client\css\font-awesome.min.css" />
+    <Content Include="assets\client\css\images\icon-search.png" />
+    <Content Include="assets\client\css\images\slider_next.png" />
+    <Content Include="assets\client\css\images\slider_prev.png" />
+    <Content Include="assets\client\css\images\status.gif" />
+    <Content Include="assets\client\css\owl.carousel.css" />
+    <Content Include="assets\client\css\slick.css" />
+    <Content Include="assets\client\css\style.css" />
+    <Content Include="assets\client\css\theme.css" />
+    <Content Include="assets\client\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\client\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\client\images\112x112.jpg" />
+    <Content Include="assets\client\images\292x150x1.jpg" />
+    <Content Include="assets\client\images\292x150x2.jpg" />
+    <Content Include="assets\client\images\300x215x1.jpg" />
+    <Content Include="assets\client\images\300x215x2.jpg" />
+    <Content Include="assets\client\images\300x215x3.jpg" />
+    <Content Include="assets\client\images\300x215x4.jpg" />
+    <Content Include="assets\client\images\390x240x1.jpg" />
+    <Content Include="assets\client\images\550x330x1.jpg" />
+    <Content Include="assets\client\images\550x330x2.jpg" />
+    <Content Include="assets\client\images\550x330x3.jpg" />
+    <Content Include="assets\client\images\550x330x4.jpg" />
+    <Content Include="assets\client\images\567x330x1.jpg" />
+    <Content Include="assets\client\images\567x330x2.jpg" />
+    <Content Include="assets\client\images\567x330x3.jpg" />
+    <Content Include="assets\client\images\740x300.jpg" />
+    <Content Include="assets\client\images\75x75.jpg" />
+    <Content Include="assets\client\images\addbanner_728x90_V1.jpg" />
+    <Content Include="assets\client\images\favicon\favicon-16x16.png" />
+    <Content Include="assets\client\images\favicon\favicon-32x32.png" />
+    <Content Include="assets\client\images\Game\nhat-nguyet.jpg" />
+    <Content Include="assets\client\js\bootstrap.min.js" />
+    <Content Include="assets\client\js\custom.js" />
+    <Content Include="assets\client\js\html5shiv.min.js" />
+    <Content Include="assets\client\js\jquery.min.js" />
+    <Content Include="assets\client\js\respond.min.js" />
+    <Content Include="assets\client\js\slick.min.js" />
+    <Content Include="assets\client\js\wow.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -1017,6 +1054,14 @@
     <Content Include="assets\admin\js\plugins\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="assets\admin\js\plugins\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="assets\admin\js\plugins\ckeditor\skins\moono\readme.md" />
+    <Content Include="assets\client\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\client\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\client\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\client\fonts\FontAwesome.otf" />
+    <Content Include="assets\client\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\client\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\client\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\client\fonts\Oswald-Regular-400.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1041,34 +1086,20 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Post\PostDetail.cshtml" />
+    <Content Include="Views\Category\CategoryDetail.cshtml" />
+    <Content Include="Views\Shared\RecentPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="assets\admin\css\" />
     <Folder Include="assets\admin\img\" />
     <Folder Include="assets\admin\scss\" />
     <Folder Include="assets\admin\vendor\" />
-    <Folder Include="assets\client\" />
     <Folder Include="DataImages\" />
-    <Folder Include="Views\Manage\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

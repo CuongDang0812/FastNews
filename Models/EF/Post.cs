@@ -1,3 +1,5 @@
+﻿using System.ComponentModel;
+
 namespace Models.EF
 {
     using System;
@@ -11,23 +13,32 @@ namespace Models.EF
     {
         public int PostID { get; set; }
 
+        [Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [StringLength(50)]
+        [DisplayName("Tiêu đề bài viết")]
         public string Title { get; set; }
 
         [StringLength(250)]
-        public string MataTitle { get; set; }
+        public string MetaTitle { get; set; }
 
+        [Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [StringLength(1000)]
+        [DisplayName("Mô tả ngắn")]
         public string Decription { get; set; }
 
+        //[Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [StringLength(250)]
+        [DisplayName("Ảnh hiển thị đại điện")]
         public string Image { get; set; }
 
+        //[Required(ErrorMessage = "Dữ liệu bắt buộc")]
         [Column(TypeName = "ntext")]
+        [DisplayName("Nội dung chi tiết")]
         public string ContentDetail { get; set; }
 
-        public int? CategoryID { get; set; }
+        [DisplayName("Thể loại")]
+        public int CategoryID { get; set; }
 
-        public DateTime? DatetimeCreate { get; set; }
+        public DateTime DatetimeCreate { get; set; }
     }
 }
