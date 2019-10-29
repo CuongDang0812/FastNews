@@ -14,11 +14,11 @@ namespace Models.EF
         public int PostID { get; set; }
 
         [Required(ErrorMessage = "Dữ liệu bắt buộc")]
-        [StringLength(50)]
+        [StringLength(1000)]
         [DisplayName("Tiêu đề bài viết")]
         public string Title { get; set; }
 
-        [StringLength(250)]
+        [StringLength(1000)]
         public string MetaTitle { get; set; }
 
         [Required(ErrorMessage = "Dữ liệu bắt buộc")]

@@ -36,5 +36,6 @@ namespace Models.EF
                 .Property(e => e.RoleName)
                 .IsUnicode(false);
         }
+
     }
 }

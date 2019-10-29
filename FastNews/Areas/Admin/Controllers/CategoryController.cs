@@ -52,8 +52,17 @@ namespace FastNews.Areas.Admin.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            new CategoryDAO().Delete(id);
-            return RedirectToAction("Index");
+            var result = new CategoryDAO().Delete(id);
+            if (result == 0)
+            {
+                ModelState.AddModelError("", "Xóa thất bại");
+            }
+            else if(result == -1)
+            {
+                    ModelState.AddModelError("", "Không thể xóa được, bài viết thuộc thể loại này vẫn còn tồn tại");
+            }
+
+            return  RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)

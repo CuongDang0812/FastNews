@@ -7,7 +7,7 @@ namespace FastNews.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         // GET: Admin/Role
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new RoleDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);

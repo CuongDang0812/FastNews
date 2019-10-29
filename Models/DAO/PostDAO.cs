@@ -21,11 +21,10 @@ namespace Models.DAO
             db = new FastNewsDbContext();
         }
 
-        // no use
-        //public Post GetById(string postName)
-        //{
-        //    return db.Posts.SingleOrDefault(x => x.Title == postName);
-        //}
+        public Post GetById(string postName)
+        {
+            return db.Posts.SingleOrDefault(x => x.Title == postName);
+        }
 
         public Post ViewDetail(int id)
         {
@@ -103,10 +102,10 @@ namespace Models.DAO
             return post;
         }
 
-        public List<PostViewModel> GetTop3Post()
+        public List<PostViewModel> GetTop3Post(string exceptHome)
         {
             List<PostViewModel> listResult = new List<PostViewModel>();
-            List<int> listCategoryID = this.db.Categories.Where(x => x.ShowOnMenu == true).Select(x => x.CategoryID).ToList();
+            List<int> listCategoryID = this.db.Categories.Where(x => x.ShowOnHome == true && x.MetaTitle != string.Empty && x.MetaTitle != exceptHome && x.MetaTitle != exceptHome.Replace("-", " ")).Select(x => x.CategoryID).ToList();
 
 
             foreach (var itemID in listCategoryID)
@@ -116,7 +115,7 @@ namespace Models.DAO
                 var post = (from p in this.db.Posts
                             join c in this.db.Categories
                                 on p.CategoryID equals c.CategoryID
-                            where c.CategoryID == itemID && c.ShowOnMenu == true
+                            where c.CategoryID == itemID && c.ShowOnHome == true
                             select p).OrderByDescending(x => x.DatetimeCreate).Take(3).ToList();
                 listResult.Add(new PostViewModel()
                 {
@@ -128,18 +127,37 @@ namespace Models.DAO
             return listResult;
         }
 
-        //public List<Post> GetListPostFromCategoryMetaTitle(int categoryID)
-        //{
-        //    return this.db.Posts.Where(x => x.CategoryID == categoryID).OrderByDescending(x => x.DatetimeCreate).ToList();
-        //}
+        public List<Post> GetPostForSlide(string aside)
+        {
+            List<Post> post;
+            if (aside == "left")
+            {
+               post = db.Posts.OrderByDescending(x => x.DatetimeCreate).Take(4).ToList();
+            }
+            else
+            {
+                post = db.Posts.OrderByDescending(x => x.DatetimeCreate).Skip(4).Take(4).ToList();
+            }
 
-        public PostViewModel GetDetailCategoryList(int categoryID)
+            foreach (var item in post)
+            {
+                var categoryMetaTitle = this.db.Categories.Find(item.CategoryID).MetaTitle;
+
+                // Gán đỡ giá trị MetaTitle của thằng Category vào nội dung của thằng Post
+                item.ContentDetail = categoryMetaTitle;
+            }
+
+            return post;
+        }
+
+        public PostViewModel GetDetailCategoryList(int categoryID, ref int totalRecord, int pageIndex = 1, int pageSize = 10)
         {
             PostViewModel viewResult = new PostViewModel();
 
             var category = this.db.Categories.Find(categoryID);
+            totalRecord = this.db.Posts.Count(x => x.CategoryID == categoryID);
             var listPost = this.db.Posts.Where(x => x.CategoryID == categoryID).OrderByDescending(x => x.DatetimeCreate)
-                .ToList();
+                .OrderByDescending(x => x.DatetimeCreate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             viewResult.CategoryName = category.CategoryName;
             viewResult.CategoryMetaTitle = category.MetaTitle;
@@ -147,16 +165,33 @@ namespace Models.DAO
 
             return viewResult;
         }
+
+        public List<Post> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 10)
+        {
+            List<Post> viewResult = new List<Post>();
+            totalRecord = this.db.Posts.Count(x => x.Title.Contains(keyword) || x.MetaTitle.Contains(keyword));
+            var listPost = this.db.Posts.Where(x => x.Title.Contains(keyword) || x.MetaTitle.Contains(keyword)).OrderByDescending(x => x.DatetimeCreate)
+                .OrderByDescending(x => x.DatetimeCreate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            foreach (var post in listPost)
+            {
+                post.ContentDetail = this.db.Categories.Find(post.CategoryID).CategoryName;
+                viewResult.Add(post);
+            }
+
+            return viewResult;
+        }
+
         public List<Post> GetSimmilarPost(int postID)
         {
             var cateId = this.db.Posts.Find(postID).CategoryID;
             var cateMeta = this.db.Categories.Find(cateId).MetaTitle;
 
             var listPost = (from p in this.db.Posts
-                          join c in this.db.Categories
-                              on p.CategoryID equals c.CategoryID
-                          where p.PostID != postID && p.CategoryID == cateId
-                          select p).OrderByDescending(x => x.DatetimeCreate).Take(3).ToList();
+                            join c in this.db.Categories
+                                on p.CategoryID equals c.CategoryID
+                            where p.PostID != postID && p.CategoryID == cateId
+                            select p).OrderByDescending(x => x.DatetimeCreate).Take(3).ToList();
             foreach (var item in listPost)
             {
                 item.ContentDetail = cateMeta;
@@ -164,22 +199,41 @@ namespace Models.DAO
             return listPost;
         }
 
-        public Post GetPrevOrNextPost(int postID)
+        public Post GetPrevOrNextPost(int postID, string howName)
         {
-            var post = this.db.Posts.Find(postID);
-            if (post != null)
+
+            List<Post> post = new List<Post>();
+            if (howName == "PREV")
             {
-                var categorMetaTitle = this.db.Categories.Find(post.CategoryID).MetaTitle;
-
-                // Gán đỡ giá trị MetaTitle của thằng Category vào nội dung của thằng Post
-                post.ContentDetail = categorMetaTitle;
+                post = this.db.Posts.Where(x => x.PostID < postID).OrderByDescending(x => x.PostID).Take(1).ToList();
             }
-            return post;
-        }
-       
-        //Bat exception khi next or prev NullReferenceException 
+            else
+            {
+                post = this.db.Posts.Where(x => x.PostID > postID).Take(1).ToList();
+            }
 
-        //get similar chua cung the loai
-     
+            if (post.Count == 0)
+            {
+                return null;
+            }
+
+            var categorMetaTitle = this.db.Categories.Find(post[0].CategoryID).MetaTitle;
+
+            // Gán đỡ giá trị MetaTitle của thằng Category vào nội dung của thằng Post
+            post[0].ContentDetail = categorMetaTitle;
+            return post[0];
+        }
+
+        public List<CommentViewModel> GetRecentComment(int postID)
+        {
+            var comment = (from c in this.db.Comments
+                           join a in this.db.Accounts
+                               on c.UserID equals a.AccountID
+                           where c.PostID == postID
+                           select new CommentViewModel() { Username = a.AccountName, DateTimeCreate = c.DateTimeCreate, ContentDetail = c.ContentDetail })
+                .OrderByDescending(x => x.DateTimeCreate).Take(3).ToList();
+
+            return comment;
+        }
     }
 }

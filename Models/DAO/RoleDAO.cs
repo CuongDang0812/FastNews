@@ -19,11 +19,10 @@ namespace Models.DAO
             return db.Roles.Where(x => x.IsDisable == false).OrderByDescending(x=>x.RoleID).ToList();
         }
 
-        // no use
-        //public Role GetById(string roleName)
-        //{
-        //    return db.Roles.SingleOrDefault(x => x.RoleName == roleName);
-        //}
+        public Role GetById(string roleName)
+        {
+            return db.Roles.SingleOrDefault(x => x.RoleName == roleName);
+        }
 
         public Role ViewDetail(int id)
         {

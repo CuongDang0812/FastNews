@@ -9,5 +9,7 @@ namespace FastNews.Common
     public class UserLogin
     {
         public string UserName { get; set; }
+        public int RoleID { get; set; }
+        public int UserID { get; set; }
     }
 }

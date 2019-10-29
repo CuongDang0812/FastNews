@@ -52,7 +52,7 @@ namespace FastNews.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Tên tài khoản đã tồn tại");
                 }
                 else
-                {
+                {  
                     ModelState.AddModelError("", "Thêm không thành công");
                 }
             }

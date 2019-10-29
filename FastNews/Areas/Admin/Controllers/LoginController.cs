@@ -27,6 +27,8 @@ namespace FastNews.Areas.Admin.Controllers
                     var user = dao.GetById(model.UserName);
                     var userSession = new UserLogin();
                     userSession.UserName = user.AccountName;
+                    userSession.UserID = user.AccountID;
+                    userSession.RoleID = user.RoleID;
                     Session.Add(Commonstants.USER_SESSION, userSession);
                     return RedirectToAction("Index", "Home");
                 }

@@ -129,5 +129,28 @@ namespace Models.DAO
             }
         }
 
+
+        //Add function in Client web
+
+        public int ChangePassword(Account entity)
+        {
+            try
+            {
+                var checkPass = this.db.Accounts.Count(x =>x.AccountName == entity.AccountName && x.Password == entity.Password) > 0;
+                if (checkPass)
+                {
+                    return -1;
+                }
+                var account = this.db.Accounts.SingleOrDefault(x => x.AccountName == entity.AccountName);
+                account.Password = entity.Password;
+                    db.SaveChanges();
+                    return 1;
+            }
+            catch (Exception)
+            {
+                //logging
+                return 0;
+            }
+        }
     }
 }

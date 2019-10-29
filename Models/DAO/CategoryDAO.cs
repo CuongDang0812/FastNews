@@ -16,11 +16,10 @@ namespace Models.DAO
             db = new FastNewsDbContext();
         }
 
-        // no use
-        //public Category GetById(string categoryName)
-        //{
-        //    return db.Categories.SingleOrDefault(x => x.CategoryName == categoryName);
-        //}
+        public Category GetById(string categoryName)
+        {
+            return db.Categories.SingleOrDefault(x => x.CategoryName == categoryName);
+        }
 
         public Category ViewDetail(int id)
         {
@@ -49,18 +48,23 @@ namespace Models.DAO
             return entity.CategoryID;
         }
 
-        public bool Delete(int id)
+        public int Delete(int id)
         {
             try
             {
                 var cate = db.Categories.Find(id);
+                var checkExistPost = this.db.Posts.Count(x => x.CategoryID == id) > 0;
+                if (checkExistPost)
+                {
+                    return -1;
+                }
                 db.Categories.Remove(cate);
                 db.SaveChanges();
-                return true;
+                return 1;
             }
             catch (Exception)
             {
-                return false;
+                return 0;
             }
         }
 
